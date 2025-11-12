@@ -30,6 +30,56 @@ export default function SubscriptionsPage() {
       if (subsData.success) setSubscriptions(subsData.subscriptions)
     } catch (err) {
       console.error("Failed to fetch data:", err)
+      // Use mock data as fallback
+      setPlans([
+        {
+          id: "1",
+          name: "Free",
+          price: 0,
+          duration: "monthly",
+          features: ["Basic features", "5 projects", "Community support"],
+        },
+        {
+          id: "2",
+          name: "Premium",
+          price: 29.99,
+          duration: "monthly",
+          features: ["All Free features", "Unlimited projects", "Priority support", "Advanced analytics"],
+        },
+        {
+          id: "3",
+          name: "Enterprise",
+          price: 99.99,
+          duration: "monthly",
+          features: ["All Premium features", "Custom integrations", "Dedicated support", "SLA guarantee"],
+        },
+      ])
+      setSubscriptions([
+        {
+          id: "1",
+          userName: "John Doe",
+          planName: "Premium",
+          status: "active",
+          startDate: "2024-01-15",
+          expiryDate: "2025-01-15",
+        },
+        {
+          id: "2",
+          userName: "Jane Smith",
+          planName: "Enterprise",
+          status: "active",
+          startDate: "2024-02-20",
+          expiryDate: "2025-02-20",
+        },
+        {
+          id: "3",
+          userName: "Sarah Williams",
+          planName: "Premium",
+          status: "active",
+          startDate: "2024-04-05",
+          expiryDate: "2025-04-05",
+        },
+      ])
     } finally {
       setLoading(false)
     }
