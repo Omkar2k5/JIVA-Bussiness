@@ -20,24 +20,12 @@ export default function ReportsPage() {
   }, [])
 
   const fetchReports = async () => {
-    try {
-      setLoading(true)
-      const data = await adminApi.getReports("summary")
-      if (data.success) {
-        setReports(data.reports)
-      }
-    } catch (err) {
-      console.error("Failed to fetch reports:", err)
-      // Use mock data as fallback
-      setReports({
-        totalRevenue: 125430,
-        newUsers: 342,
-        churnRate: 3.2,
-        avgRevenuePerUser: 45.67,
-      })
-    } finally {
-      setLoading(false)
+    setLoading(true)
+    const data = await adminApi.getReports("summary")
+    if (data.success) {
+      setReports(data.reports)
     }
+    setLoading(false)
   }
 
   const handleExport = async (format: string) => {
@@ -48,10 +36,7 @@ export default function ReportsPage() {
       a.href = url
       a.download = `admin-report.${format}`
       a.click()
-    } catch (err) {
-      console.error("Failed to export:", err)
-      alert(`Export ${format.toUpperCase()} simulated (backend not connected)`)
-    }
+    } catch (err) {}
   }
 
   return (

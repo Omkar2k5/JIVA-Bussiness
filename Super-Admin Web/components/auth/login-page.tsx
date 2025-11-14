@@ -23,24 +23,19 @@ export default function LoginPage() {
     setError("")
 
     try {
-      // Static credentials for development
-      if (email === "123@gmail.com" && password === "123") {
-        setAuthToken("static-token-123")
-        setAuthUser({
-          id: "123",
-          email: "admin@jiva.com",
-          name: "Admin User",
-          role: "super_admin",
-        })
-
+      const data = await adminApi.login(email, password)
+      if (data?.access_token) {
+        setAuthToken(data.access_token)
+        if (data.user) {
+          setAuthUser(data.user)
+        }
         router.push("/admin/dashboard")
-        return
+      } else {
+        setError("Invalid credentials")
       }
-
-      setError("Invalid credentials. Use ID: 123, Password: 123")
-      setLoading(false)
     } catch (err: any) {
-      setError(err.message || "An error occurred")
+      setError(err?.message || "Login failed")
+    } finally {
       setLoading(false)
     }
   }

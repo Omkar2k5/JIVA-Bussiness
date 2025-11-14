@@ -1,0 +1,128 @@
+"""
+Seed script to create initial admin user
+"""
+import sys
+from pathlib import Path
+
+# Add parent directory to path
+sys.path.append(str(Path(__file__).resolve().parents[1]))
+
+from app.database import SessionLocal
+from app.models.user import User, UserRole, UserStatus
+from app.auth import get_password_hash
+
+
+def create_admin_user():
+    """Create initial admin user"""
+    db = SessionLocal()
+    
+    try:
+        # Check if admin already exists
+        existing_admin = db.query(User).filter(User.email == "admin@jiva.com").first()
+        if existing_admin:
+            print("✅ Admin user already exists!")
+            print(f"Email: {existing_admin.email}")
+            return
+        
+        # Create admin user
+        admin_user = User(
+            name="Super Admin",
+            email="admin@jiva.com",
+            hashed_password=get_password_hash("admin123"),
+            role=UserRole.super_admin,
+            status=UserStatus.active,
+            subscription_plan="Enterprise",
+            is_email_verified=True
+        )
+        
+        db.add(admin_user)
+        db.commit()
+        db.refresh(admin_user)
+        
+        print("✅ Admin user created successfully!")
+        print(f"Email: {admin_user.email}")
+        print(f"Password: admin123")
+        print(f"Role: {admin_user.role}")
+        print("\n⚠️  Please change the password after first login!")
+        
+    except Exception as e:
+        print(f"❌ Error creating admin user: {e}")
+        db.rollback()
+    finally:
+        db.close()
+
+
+def create_sample_users():
+    """Create sample users for testing"""
+    db = SessionLocal()
+    
+    try:
+        sample_users = [
+            {
+                "name": "John Doe",
+                "email": "john.doe@example.com",
+                "password": "password123",
+                "plan": "Premium"
+            },
+            {
+                "name": "Jane Smith",
+                "email": "jane.smith@example.com",
+                "password": "password123",
+                "plan": "Enterprise"
+            },
+            {
+                "name": "Mike Johnson",
+                "email": "mike.j@example.com",
+                "password": "password123",
+                "plan": "Free"
+            },
+            {
+                "name": "Sarah Williams",
+                "email": "sarah.w@example.com",
+                "password": "password123",
+                "plan": "Premium"
+            },
+            {
+                "name": "David Brown",
+                "email": "d.brown@example.com",
+                "password": "password123",
+                "plan": "Free"
+            }
+        ]
+        
+        created_count = 0
+        for user_data in sample_users:
+            # Check if user exists
+            existing = db.query(User).filter(User.email == user_data["email"]).first()
+            if not existing:
+                user = User(
+                    name=user_data["name"],
+                    email=user_data["email"],
+                    hashed_password=get_password_hash(user_data["password"]),
+                    role=UserRole.user,
+                    status=UserStatus.active,
+                    subscription_plan=user_data["plan"],
+                    is_email_verified=True
+                )
+                db.add(user)
+                created_count += 1
+        
+        db.commit()
+        print(f"✅ Created {created_count} sample users!")
+        
+    except Exception as e:
+        print(f"❌ Error creating sample users: {e}")
+        db.rollback()
+    finally:
+        db.close()
+
+
+if __name__ == "__main__":
+    print("🚀 Seeding database...")
+    print("\n📝 Creating admin user...")
+    create_admin_user()
+    
+    print("\n📝 Creating sample users...")
+    create_sample_users()
+    
+    print("\n✨ Database seeding complete!")

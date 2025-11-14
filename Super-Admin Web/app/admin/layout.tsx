@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { getAuthUser, removeAuthToken } from "@/lib/auth"
 import Sidebar from "@/components/sidebar"
 import Navbar from "@/components/navbar"
+import DevBanner from "@/components/dev-banner"
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState(null)
@@ -33,6 +34,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     <div className="flex h-screen bg-background">
       <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       <div className="flex-1 flex flex-col overflow-hidden">
+        <DevBanner />
         <Navbar user={user} onLogout={handleLogout} onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
         <main className="flex-1 overflow-auto">
           <div className="p-6">{children}</div>
