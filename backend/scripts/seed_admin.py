@@ -3,6 +3,7 @@ Seed script to create initial admin user
 """
 import sys
 from pathlib import Path
+from datetime import datetime, timedelta
 
 # Add parent directory to path
 sys.path.append(str(Path(__file__).resolve().parents[1]))
@@ -32,7 +33,10 @@ def create_admin_user():
             role=UserRole.super_admin,
             status=UserStatus.active,
             subscription_plan="Enterprise",
-            is_email_verified=True
+            is_email_verified=True,
+            phone="+1-555-0000",
+            plan_valid_until=datetime.now().date() + timedelta(days=365),
+            reference="System Admin"
         )
         
         db.add(admin_user)
@@ -57,6 +61,10 @@ def create_sample_users():
     db = SessionLocal()
     
     try:
+        reference_names = ["John Smith", "Alice Johnson", "Bob Wilson", "Carol Davis", "David Miller",
+                          "Emma Brown", "Frank Taylor", "Grace Lee", "Henry Anderson", "Iris Martinez",
+                          "Jack White", "Karen Harris", "Leo Clark", "Mona Lewis", "Nathan Young"]
+        
         sample_users = [
             {
                 "name": "John Doe",
@@ -64,7 +72,9 @@ def create_sample_users():
                 "password": "password123",
                 "plan": "Premium",
                 "status": "active",
-                "phone": "+1-555-0101"
+                "phone": "+1-555-0101",
+                "reference": reference_names[0],
+                "days_valid": 180
             },
             {
                 "name": "Jane Smith",
@@ -72,7 +82,9 @@ def create_sample_users():
                 "password": "password123",
                 "plan": "Enterprise",
                 "status": "active",
-                "phone": "+1-555-0102"
+                "phone": "+1-555-0102",
+                "reference": reference_names[1],
+                "days_valid": 365
             },
             {
                 "name": "Mike Johnson",
@@ -80,7 +92,9 @@ def create_sample_users():
                 "password": "password123",
                 "plan": "Free",
                 "status": "active",
-                "phone": "+1-555-0103"
+                "phone": "+1-555-0103",
+                "reference": reference_names[2],
+                "days_valid": 30
             },
             {
                 "name": "Sarah Williams",
@@ -88,7 +102,9 @@ def create_sample_users():
                 "password": "password123",
                 "plan": "Premium",
                 "status": "active",
-                "phone": "+1-555-0104"
+                "phone": "+1-555-0104",
+                "reference": reference_names[3],
+                "days_valid": 200
             },
             {
                 "name": "David Brown",
@@ -96,7 +112,9 @@ def create_sample_users():
                 "password": "password123",
                 "plan": "Free",
                 "status": "suspended",
-                "phone": "+1-555-0105"
+                "phone": "+1-555-0105",
+                "reference": reference_names[4],
+                "days_valid": 15
             },
             {
                 "name": "Emily Davis",
@@ -104,7 +122,9 @@ def create_sample_users():
                 "password": "password123",
                 "plan": "Enterprise",
                 "status": "active",
-                "phone": "+1-555-0106"
+                "phone": "+1-555-0106",
+                "reference": reference_names[5],
+                "days_valid": 365
             },
             {
                 "name": "Robert Wilson",
@@ -112,7 +132,9 @@ def create_sample_users():
                 "password": "password123",
                 "plan": "Premium",
                 "status": "active",
-                "phone": "+1-555-0107"
+                "phone": "+1-555-0107",
+                "reference": reference_names[6],
+                "days_valid": 150
             },
             {
                 "name": "Lisa Anderson",
@@ -120,7 +142,9 @@ def create_sample_users():
                 "password": "password123",
                 "plan": "Free",
                 "status": "active",
-                "phone": "+1-555-0108"
+                "phone": "+1-555-0108",
+                "reference": reference_names[7],
+                "days_valid": 60
             },
             {
                 "name": "James Taylor",
@@ -128,7 +152,9 @@ def create_sample_users():
                 "password": "password123",
                 "plan": "Premium",
                 "status": "active",
-                "phone": "+1-555-0109"
+                "phone": "+1-555-0109",
+                "reference": reference_names[8],
+                "days_valid": 250
             },
             {
                 "name": "Patricia Martinez",
@@ -136,7 +162,9 @@ def create_sample_users():
                 "password": "password123",
                 "plan": "Free",
                 "status": "active",
-                "phone": "+1-555-0110"
+                "phone": "+1-555-0110",
+                "reference": reference_names[9],
+                "days_valid": 45
             },
             {
                 "name": "Christopher Lee",
@@ -144,7 +172,9 @@ def create_sample_users():
                 "password": "password123",
                 "plan": "Enterprise",
                 "status": "active",
-                "phone": "+1-555-0111"
+                "phone": "+1-555-0111",
+                "reference": reference_names[10],
+                "days_valid": 365
             },
             {
                 "name": "Jennifer White",
@@ -152,7 +182,9 @@ def create_sample_users():
                 "password": "password123",
                 "plan": "Premium",
                 "status": "suspended",
-                "phone": "+1-555-0112"
+                "phone": "+1-555-0112",
+                "reference": reference_names[11],
+                "days_valid": 90
             },
             {
                 "name": "Daniel Harris",
@@ -160,7 +192,9 @@ def create_sample_users():
                 "password": "password123",
                 "plan": "Free",
                 "status": "active",
-                "phone": "+1-555-0113"
+                "phone": "+1-555-0113",
+                "reference": reference_names[12],
+                "days_valid": 30
             },
             {
                 "name": "Nancy Clark",
@@ -168,7 +202,9 @@ def create_sample_users():
                 "password": "password123",
                 "plan": "Premium",
                 "status": "active",
-                "phone": "+1-555-0114"
+                "phone": "+1-555-0114",
+                "reference": reference_names[13],
+                "days_valid": 180
             },
             {
                 "name": "Mark Lewis",
@@ -176,7 +212,9 @@ def create_sample_users():
                 "password": "password123",
                 "plan": "Enterprise",
                 "status": "active",
-                "phone": "+1-555-0115"
+                "phone": "+1-555-0115",
+                "reference": reference_names[14],
+                "days_valid": 365
             }
         ]
         
@@ -193,7 +231,9 @@ def create_sample_users():
                     status=UserStatus(user_data["status"]),
                     subscription_plan=user_data["plan"],
                     phone=user_data.get("phone"),
-                    is_email_verified=True
+                    is_email_verified=True,
+                    reference=user_data.get("reference"),
+                    plan_valid_until=datetime.now().date() + timedelta(days=user_data.get("days_valid", 30))
                 )
                 db.add(user)
                 created_count += 1

@@ -1,5 +1,5 @@
 from pydantic import BaseModel, EmailStr
-from datetime import datetime
+from datetime import datetime, date
 from typing import Optional
 from app.models.user import UserStatus, UserRole
 
@@ -22,6 +22,8 @@ class UserUpdate(BaseModel):
     role: Optional[UserRole] = None
     subscription_plan: Optional[str] = None
     phone: Optional[str] = None
+    reference: Optional[str] = None
+    plan_valid_until: Optional[date] = None
 
 
 class UserResponse(UserBase):
@@ -33,6 +35,8 @@ class UserResponse(UserBase):
     updated_at: datetime
     last_active: Optional[datetime]
     phone: Optional[str]
+    reference: Optional[str]
+    plan_valid_until: Optional[date]
     is_email_verified: bool
     
     class Config:

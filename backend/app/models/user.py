@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime, Enum, Boolean
+from sqlalchemy import Column, Integer, String, DateTime, Date, Enum, Boolean
 from sqlalchemy.sql import func
 from app.database import Base
 import enum
@@ -36,6 +36,10 @@ class User(Base):
     phone = Column(String(20), nullable=True)
     avatar_url = Column(String(500), nullable=True)
     is_email_verified = Column(Boolean, default=False)
+    
+    # Plan fields
+    plan_valid_until = Column(Date(), nullable=True)
+    reference = Column(String(255), nullable=True)
     
     def __repr__(self):
         return f"<User {self.email}>"
