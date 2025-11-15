@@ -10,7 +10,7 @@ from app.database import get_db
 from app.models.user import User, UserRole
 from app.schemas.user import TokenData
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+pwd_context = CryptContext(schemes=["argon2", "bcrypt"], deprecated="auto")
 security = HTTPBearer()
 
 
